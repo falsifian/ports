@@ -7,7 +7,7 @@
 #
 #  MODCABAL_STEM - the name of the package on hackage.
 #  MODCABAL_VERSION  - the version of the package.
-#  MODCABAL_MANIFEST - hackage dependencies required by this package, tripples
+#  MODCABAL_MANIFEST - hackage dependencies required by this package, triples
 #    of space separate <package> <version> <revision>. Typically generated
 #    with cabal-bundler program from cabal-extras. The patch pending review
 #    https://github.com/phadej/cabal-extras/pull/32
@@ -17,7 +17,7 @@
 #    needed on top of .cabal file contained in the .tar.gz file.
 #  MODCABAL_BUILD_ARGS - passed to cabal v2-build, e.g. make MODCABAL_BUILD_ARGS=-v
 #    is a nice debugging aid.
-#  MODCABAL_FLAGS - passed to --flags= of cabal v2-build. Seemingly superflous given
+#  MODCABAL_FLAGS - passed to --flags= of cabal v2-build. Seemingly superfluous given
 #    MODCABAL_BUILD_ARGS, but it is useful to keep this value separate as it
 #    is used to generate the build plan and will be available without parsing.
 #  MODCABAL_EXECUTABLES - Executable target in .cabal file, by default uses
