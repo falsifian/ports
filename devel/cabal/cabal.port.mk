@@ -9,8 +9,8 @@
 #  MODCABAL_VERSION  - the version of the package.
 #  MODCABAL_MANIFEST - hackage dependencies required by this package, triples
 #    of space separate <package> <version> <revision>. Typically generated
-#    with cabal-bundler program from cabal-extras. The patch pending review
-#    https://github.com/phadej/cabal-extras/pull/32
+#    with cabal-bundler program from cabal-extras, e.g.
+#    cabal-bundler --openbsd darcs-2.16.2
 #  MODCABAL_DATA_DIR - data-dir from .cabal file (if the port needs the data)
 #    https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-data-dir
 #  MODCABAL_REVISION - Numeric revision of .cabal file on hackage if one is
