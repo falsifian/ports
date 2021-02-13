@@ -17,9 +17,10 @@
 #    needed on top of .cabal file contained in the .tar.gz file.
 #  MODCABAL_BUILD_ARGS - passed to cabal v2-build, e.g. make MODCABAL_BUILD_ARGS=-v
 #    is a nice debugging aid.
-#  MODCABAL_FLAGS - passed to --flags= of cabal v2-build. Seemingly superfluous given
-#    MODCABAL_BUILD_ARGS, but it is useful to keep this value separate as it
-#    is used to generate the build plan and will be available without parsing.
+#  MODCABAL_FLAGS - passed to --flags= of cabal v2-build and v2-test. Seemingly
+#    superfluous given MODCABAL_BUILD_ARGS, but it is useful to keep this value
+#    separate as it is used to generate the build plan and will be available
+#    without parsing.
 #  MODCABAL_EXECUTABLES - Executable target in .cabal file, by default uses
 #    the hackage package name.
 #    https://cabal.readthedocs.io/en/latest/cabal-package.html#executables
@@ -92,6 +93,9 @@ MODCABAL_post-extract += \
 	&& (test -f ${FILESDIR}/cabal.project \
 	    && cp -v ${FILESDIR}/cabal.project ${WRKSRC}; true)
 
+MODCABAL_post-extract += \
+	&& echo 'tests: True' >> ${WRKSRC}/cabal.project.local
+
 # Invokes cabal with HOME set up to use .cabal directory created in
 # post-extract.
 _MODCABAL_CABAL = ${SETENV} ${MAKE_ENV} HOME=${WRKDIR} ${LOCALBASE}/bin/cabal
@@ -144,6 +148,13 @@ _MODCABAL_INSTALL_TARGET += \
 .  endif
 .endfor
 
+_MODCABAL_TEST_TARGET = \
+	cd ${WRKBUILD} \
+	&& ${_MODCABAL_CABAL} v2-test --offline --disable-benchmarks \
+		-w ${LOCALBASE}/bin/ghc \
+		-j${MAKE_JOBS} \
+		--flags="${MODCABAL_FLAGS}"
+
 .if !target(do-build)
 do-build:
 	@${_MODCABAL_BUILD_TARGET}
@@ -152,4 +163,9 @@ do-build:
 .if !target(do-install)
 do-install:
 	@${_MODCABAL_INSTALL_TARGET}
+.endif
+
+.if !target(do-test)
+do-test:
+	${_MODCABAL_TEST_TARGET}
 .endif
